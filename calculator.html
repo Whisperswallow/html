@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Calculator</h2>
+<p>Click the button to enter number and do calculations.</p>
+
+
+
+<!-- 控制器 --> 
+<table id="controller" border="1" cellpadding="1" cellspacing="1" style="border: 5px solid #990088; 
+border-collapse: collapse; width:240px;">
+  <tr height="80" width:"200">
+　  <td colspan="4" align = "right" style="background-color:#FFF3FF;">
+      <font face="Times New Roman">
+        <span id = "outScreen" style="font-size:36px;"></span>
+      </font>
+    </td>
+　</tr>
+  <tr height="60">
+　  <td align = "center" width="60"> 
+      <center>
+        <button id = "clc" 
+         onclick = "clearConsole(); showString()" 
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;"> 
+          <span style="font-size:36px;color:#FF0000"> C </span> 
+        </button>
+      </center>
+    </td>
+    <td align = "center" width="60"> 
+      <center>
+        <button id = "devide"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         onclick = "input('/');showString()"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;"> 
+          <span style="font-size:36px;"> ÷ </span> 
+        </button>
+      </center>
+    </td>
+    <td align = "center" width="60">
+      <center>
+        <button id = "time" onclick = "input('*');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;"> 
+          <span style="font-size:36px;"> × </span> 
+        </button>
+      </center>
+    </td>
+    <td align = "center" width="60">
+      <center>
+        <button id = "minus" onclick = "input('-');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> - </span> 
+        </button>
+      </center>
+    </td>
+　</tr>
+  <tr height="60">
+    <td align = "center">
+      <center>
+        <button id = "7" onclick = "input('7');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 7 </span> 
+        </button>
+      </center>
+    </td>
+    <td align = "center">
+      <center>
+        <button id = "8" onclick = "input('8');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 8 </span> 
+        </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "9" onclick = "input('9');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;"> 
+          <span style="font-size:36px;"> 9 </span>
+        </button>
+      </center>
+    </td>
+    <td rowspan = "2">
+      <center>
+        <button id = "c1" onclick = "input('+');showString()"
+         onmouseover = "this.style='width:53px;height:113px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:114px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:114px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> + </span>
+        </button>
+      </center>
+    </td>
+  </tr>
+　<tr height="60">
+　  <td>
+      <center>
+        <button id = "f1" onclick = "input('4');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 4 </span>
+        </button>
+      </center>
+    </td>
+　  <td>
+      <center>
+        <button id = "b1" onclick = "input('5');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 5 </span>
+        </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "c10" onclick = "input('6');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 6 </span>
+        </button>
+      </center>
+    </td>
+　</tr>
+　<tr height="60">
+    <td>
+      <center>
+        <button id = "f50" onclick = "input('1');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 1 </span>
+        </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "b50" onclick = "input('2');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 2 </span>
+        </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "bf" onclick = "input('3');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 3 </span>
+        </button>
+      </center>
+    </td>
+    <td rowspan = "2">
+      <center>
+        <button id = "bf" onclick = "calculation();showString()"
+         onmouseover = "this.style='width:53px;height:113px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:114px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:114px;border:3px #990088 double; background-color:#FFFFFF;">  
+          <span style="font-size:36px;"> = </span> 
+        </button>
+      </center>
+    </td>
+　</tr>
+  <tr height="60">
+    <td colspan="2">
+      <center>
+        <button id = "b10" onclick = "input('0');showString()"
+         onmouseover = "this.style='width:113px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:114px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:114px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> 0 </span> 
+        </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "bf" onclick = "input('.');showString()"
+         onmouseover = "this.style='width:53px;height:53px;border:3px #990088 double; background-color:#F3F3F3;'"
+         onmouseout = "this.style='width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;'"
+         style="width:54px;height:54px;border:3px #990088 double; background-color:#FFFFFF;">
+          <span style="font-size:36px;"> . </span> 
+        </button>
+      </center>
+    </td>
+　</tr>
+</table>
+
+
+<script>
+var outPacket = { 
+  inputString:"",
+  outputNumberList:[],
+  outputOperatorList:[]
+}
+
+function input(inString){
+  outPacket.inputString += inString;
+}
+
+function showString(){
+  document.getElementById("outScreen").innerText = outPacket.inputString;
+}
+
+function clearConsole(){
+  outPacket.inputString = "";
+}
+
+function calculation(){
+  <!-- 取數字部分(正負有限小數) --> 
+  outPacket.outputNumberList = outPacket.inputString.match(/(?<![0-9])\-?[0-9]+(\.[0-9]+)?/g); 
+  <!-- 取符號部分(+ - * /) -->
+  outPacket.outputOperatorList = outPacket.inputString.match(/(?<=[0-9])[+|\-|*|\/](?=[0-9|\-])/g);
+
+  <!-- 運算 -->
+  let numberStack = [];
+  let operatorStack = [];
+  let tempElement;
+
+  while((tempElement=outPacket.outputOperatorList.shift())!=undefined){
+
+    if(tempElement == "*"){
+      outPacket.outputNumberList.unshift((Number(outPacket.outputNumberList.shift()) * 
+       Number(outPacket.outputNumberList.shift())).toFixed(8).replace(/0+$/, "").replace(/\.$/, ""));
+    } else if(tempElement == "/"){
+      outPacket.outputNumberList.unshift((Number(outPacket.outputNumberList.shift()) / 
+       Number(outPacket.outputNumberList.shift())).toFixed(8).replace(/0+$/, "").replace(/\.$/, ""));
+    } else {
+      numberStack.push(outPacket.outputNumberList.shift());
+      operatorStack.push(tempElement);
+    }
+  }
+
+  numberStack.push(outPacket.outputNumberList.shift());
+
+  while((tempElement=operatorStack.shift())!=undefined){
+    if(tempElement == "+"){
+      numberStack.unshift((Number(numberStack.shift()) + 
+       Number(numberStack.shift())).toFixed(8).replace(/0+$/, "").replace(/\.$/, ""));
+    } else if(tempElement == "-"){
+      numberStack.unshift((Number(numberStack.shift()) - 
+       Number(numberStack.shift())).toFixed(8).replace(/0+$/, "").replace(/\.$/, ""));
+    } else {
+      throw "Wrong operation code!";
+    }
+  }
+
+  outPacket.inputString = numberStack.shift();
+}
+
+</script>
+
+</body>
+</html> 

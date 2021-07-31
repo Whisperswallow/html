@@ -1,0 +1,498 @@
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+  table{
+    border: 1px;
+    border-style: solid;
+  }
+  table td{
+    border: 1px;
+    border-style: solid;
+  }
+
+  #popDiv{
+    display: none;
+    background-color: whitesmoke;
+    z-index: 11;
+    width: 355px;
+    height: 430px;
+    position:fixed;
+    top:-10;
+    right:0;
+    left:200;
+    bottom:0;
+    margin:auto;
+    border-style:outset;
+  }
+  #popDiv .close a {
+    text-decoration: none;
+    color: whitesmoke;
+  }
+  #popDiv .close{
+    text-align: right;
+    margin-right: 5px;
+    background-color:#100F19;
+  }
+  #popDiv p{
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  #popCheckout{
+    display: none;
+    background-color: #FCFFEF;
+    z-index: 11;
+    width: 340px;
+    height: 300px;
+    position:fixed;
+    top:0;
+    right:300;
+    left:0;
+    bottom:0;
+    margin:auto;
+    border-style:outset;
+  }
+  #popCheckout .close{
+    text-align: right;
+    margin-right: 5px;
+    background-color:#2D2C3B;
+  }
+  #popCheckout p{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  #popSuccessCheckout{
+    display: none;
+    background-color: #FCFFEF;
+    z-index: 13;
+    width: 340px;
+    height: 150px;
+    position:fixed;
+    top:0;
+    right:300;
+    left:0;
+    bottom:0;
+    margin:auto;
+    border-style:outset;
+  }
+  #popSuccessCheckout .close{
+    text-align: right;
+    margin-right: 5px;
+    background-color:#2D2C3B;
+  }
+  #popSuccessCheckout p{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  #checkMessage{
+    width: 310px;
+    height: 120px;
+    position:fixed;
+    background-color: #FCE6E5;
+    top:52;
+    right:0;
+    left:446;
+    bottom:0;
+    border-style:outset;
+  }
+
+  #responseBotton{
+    width: 320px;
+    height: 60px;
+    position:fixed;
+    background-color: #FCFFE5;
+    top:517;
+    right:0;
+    left:446;
+    bottom:0;
+    border-style:outset;
+  }
+
+  #shoplistWindow{
+    width: 320px;
+    background-color: #FCFFE5;
+    top:517;
+    right:0;
+    left:446;
+    bottom:0;
+  }
+
+  #shoplist{
+    width:280px;
+    margin-left:10;
+    border-style:none;
+  }
+
+  #shoplist td{
+    padding:5;
+    border-style:none;
+  }
+
+</style>
+<script>
+  var totalPrice = 0;
+   
+  function popDiv(){
+    document.getElementById("popDiv").style.display = "block";
+    document.getElementById("popLayer").style.display = "block";
+  }
+
+  function closePop(){
+    document.getElementById("popDiv").style.display = "none";
+  }
+
+  function popSuccess(){
+    document.getElementById("popSuccessCheckout").style.display = "block";
+    document.getElementById("popLayer").style.display = "block";
+  }
+
+  function closeSuccess(){
+    document.getElementById("popSuccessCheckout").style.display = "none";
+  }
+
+  function add(){
+
+    if(document.getElementById("name").value == ""){
+      alert("請選擇商品項目。");
+    }else if(document.getElementById("number").value == ""){
+      alert("請選擇數量。");
+    }else{
+    
+      let table = document.getElementById("work_table");
+
+      let newRow = table.insertRow();
+
+      let cellName = newRow.insertCell();
+      let cellSugar = newRow.insertCell();
+      let cellIce = newRow.insertCell();
+      let cellSize = newRow.insertCell();
+      let cellBubble = newRow.insertCell();
+      let cellMilk = newRow.insertCell();
+      let cellPudding = newRow.insertCell();
+      let cellPrice = newRow.insertCell();
+      let cellNumber = newRow.insertCell();
+      let cellDelete = newRow.insertCell();
+
+
+      let priceEach = 15;
+
+      let sugarRadio = document.getElementById("sugarList");
+      for(let i=0; i<sugarRadio.sugar.length;i++){
+        if(sugarRadio.sugar[i].checked){
+          cellSugar.innerHTML = sugarRadio.sugar[i].value;
+        }
+      }
+
+      let iceRadio = document.getElementById("iceList");
+      for(let i=0; i<iceRadio.ice.length;i++){
+        if(iceRadio.ice[i].checked){
+          cellIce.innerHTML = iceRadio.ice[i].value;
+        }
+      }
+
+      let sizeRadio = document.getElementById("sizeList");
+      for(let i=0; i<sizeRadio.size.length;i++){
+        if(sizeRadio.size[i].checked){
+          cellSize.innerHTML = sizeRadio.size[i].value;
+          priceEach += i*5;
+        }
+      }
+
+      if(document.getElementById("bubble").checked){
+        cellBubble.innerHTML = "v";
+        priceEach += 5;
+      }
+
+      if(document.getElementById("milk").checked){
+        cellMilk.innerHTML = "v";
+        priceEach += 5;
+      }
+
+      if(document.getElementById("pudding").checked){
+        cellPudding.innerHTML = "v";
+        priceEach += 10;
+      }
+
+      cellName.innerHTML = document.getElementById("name").value;
+      cellNumber.innerHTML = document.getElementById("number").value;
+
+      var deleteButton = document.createElement("input"); 
+      deleteButton.type = "button"; 
+      deleteButton.value = "刪除";
+      cellDelete.appendChild(deleteButton);
+      deleteButton.onclick = function (){
+        let idx = this.parentNode.parentNode.rowIndex;
+
+        let priceDelete = Number(document.getElementById('work_table').rows[idx].cells[7].innerHTML);
+        let numberDelete = Number(document.getElementById('work_table').rows[idx].cells[8].innerHTML);
+
+        totalPrice -= priceDelete * numberDelete;
+
+        document.getElementById('work_table').deleteRow(idx);
+        document.getElementById("totalPriceOutput").innerHTML = "總價 " + (Array(5).join('-')+totalPrice).slice(-5).replaceAll('-','&ensp;');
+        document.getElementById("totalMoney").innerHTML = "小計 " + (Array(5).join('-')+totalPrice).slice(-5).replaceAll('-','&ensp;') + " 元";
+      };
+      cellPrice.innerHTML = priceEach;
+      totalPrice += priceEach * Number(document.getElementById("number").value);
+      document.getElementById("totalPriceOutput").innerHTML = "總價 " + (Array(5).join('-')+totalPrice).slice(-5).replaceAll('-','&ensp;');
+      document.getElementById("totalMoney").innerHTML = "小計 " + (Array(5).join('-')+totalPrice).slice(-5).replaceAll('-','&ensp;') + " 元";
+
+      closePop();
+    }
+  }
+
+  function reset(){
+    document.getElementById("name").value = "";
+    document.getElementById("number").value = "";
+    document.getElementById("bubble").checked = 0;
+    document.getElementById("pudding").checked = 0;
+    document.getElementById("milk").checked = 0;
+
+    let sugarRadio = document.getElementById("sugarList");
+    for(let i=0; i<sugarRadio.sugar.length-1;i++){
+      sugarRadio.sugar[i].checked = 0;
+    }
+    sugarRadio.sugar[4].checked = 1;
+
+    let iceRadio = document.getElementById("iceList");
+    for(let i=0; i<iceRadio.ice.length-1;i++){
+      iceRadio.ice[i].checked = 0;
+    }
+    iceRadio.ice[4].checked = 1;
+
+    let sizeRadio = document.getElementById("sizeList");
+    sizeRadio.size[0].checked = 0;
+    sizeRadio.size[1].checked = 1;
+    sizeRadio.size[2].checked = 0;
+  }
+
+  function popCheckout(){
+    document.getElementById("popCheckout").style.display = "block";
+    document.getElementById("popLayer").style.display = "block";
+  }
+
+  function closeCheckout(){
+    document.getElementById("popCheckout").style.display = "none";
+  }
+
+  function listItem(){
+    let shoplistTable = document.getElementById("shoplist");
+    let itemCount = 1;
+    while(document.getElementById('work_table').rows[itemCount]!=undefined){
+
+      let newItem = shoplistTable.insertRow();
+
+      let cellName = newItem.insertCell();
+
+      let thisItem = document.getElementById('work_table').rows[itemCount];
+      cellName.innerHTML += "<font size='+1'>" + thisItem.cells[0].innerHTML + "</font> " ;
+      cellName.innerHTML += "&ensp;&ensp; <font color='#B05C00'>" + thisItem.cells[1].innerHTML + "</font> " + 
+                            " <font color='#4155FF'>" + thisItem.cells[2].innerHTML + "</font> " +"<br>";
+      let sizePrize = 0;
+
+      if(thisItem.cells[3].innerHTML=="小杯"){
+        sizePrize = 15;
+      } else if(thisItem.cells[3].innerHTML=="中杯"){
+        sizePrize = 20;
+      } else if(thisItem.cells[3].innerHTML=="大杯"){
+        sizePrize = 25;
+      }
+
+      cellName.innerHTML += "&ensp;&ensp;" + thisItem.cells[3].innerHTML + 
+                            "&ensp;&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;" + 
+                            ".&ensp;.&ensp;.&ensp;.&ensp;." + "&ensp; " + sizePrize + "&ensp;元" + "<br>";
+      if(thisItem.cells[4].innerHTML!=""){
+        cellName.innerHTML += "&ensp;&ensp;＋ 珍珠" +
+                              "&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;." + 
+                              "&ensp;&ensp; 5 元" + "<br>";
+      }
+
+      if(thisItem.cells[5].innerHTML!=""){
+        cellName.innerHTML += "&ensp;&ensp;＋ 鮮奶" + 
+                              "&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;." +
+                              "&ensp;&ensp; 5 元" + "<br>";
+      }
+
+      if(thisItem.cells[6].innerHTML!=""){
+        cellName.innerHTML += "&ensp;&ensp;＋ 布丁" + 
+                              "&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;.&ensp;." +
+                              "&ensp; 10 元" + "<br>";
+      }
+
+      let priceItem = Number(thisItem.cells[7].innerHTML);
+      let numberItem = Number(thisItem.cells[8].innerHTML);
+      
+      let newPrice = shoplistTable.insertRow();
+      let newCellPrice = newPrice.insertCell();
+
+      newCellPrice.innerHTML += "<font size='+1'> 共&ensp;" + (Array(5).join('-')+numberItem).slice(-5).replaceAll('-','&ensp;') + 
+                            "&ensp;杯" + "&emsp;&emsp;&emsp;&emsp;&emsp;" + 
+                            (Array(5).join('-')+priceItem*numberItem).slice(-5).replaceAll('-','&ensp;') + 
+                            "&ensp;元 </font> " + "<br>";
+
+      itemCount++
+    }
+  }
+
+  function checkout(){
+    document.getElementById("msg").innerHTML += "checkout\n";
+    
+    while(document.getElementById('work_table').rows[1]!=undefined){
+      document.getElementById('work_table').deleteRow(1);
+    }
+
+    while(document.getElementById('shoplist').rows[0]!=undefined){
+      document.getElementById('shoplist').deleteRow(0);
+    }
+
+    document.getElementById("totalPriceOutput").innerHTML = "總價 " + (Array(5).join(' ')+'0').slice(-5);
+    document.getElementById("totalMoney").innerHTML = "小計 " + (Array(5).join('-')+0).slice(-5).replaceAll('-','&ensp;') + " 元";
+  }
+</script>
+</head>
+<body>
+  <button onclick="popDiv();reset();">新增項目</button> 
+  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+  <button onclick="listItem();popCheckout();">結帳</button>
+  <br><br>
+
+  <div id="popLayer">
+    <table id="work_table" style="text-align:center;">
+      <tr>
+        <td width=75>品項</td>
+        <td width=40>糖度</td>
+        <td width=40>冰塊</td>
+        <td width=40>大小</td>
+        <td width=40>珍珠</td>
+        <td width=40>鮮奶</td>
+        <td width=40>布丁</td>
+        <td width=40>單價</td>
+        <td width=40>數量</td>
+        <td width=50></td>
+      </tr>
+    </table>
+
+    <table width=505>
+      <tr>
+        <td id="totalPriceOutput" align="right">總價&nbsp;0</td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="popDiv">
+    <div class="close">
+      <a href="javascript:void(0)" onclick="closePop()">關閉</a>
+    </div>
+    <br>
+    <div style = "padding-left:10;">
+      <label>商品名稱</label>&nbsp;&nbsp;&nbsp;
+      <select id="name" style="width:100px;height:25px">
+        <option disabled selected value style="display:none"></option>
+        <option>紅茶</option>
+        <option>綠茶</option>
+        <option>冬瓜茶</option>
+        <option>烏龍茶</option>
+      </select><br/><br/>
+
+      <form name="sugarList" id="sugarList">
+        <label>糖度</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" name="sugar" value="無糖"> 無
+        <input type="radio" name="sugar" value="微糖"> 微
+        <input type="radio" name="sugar" value="半糖"> 半
+        <input type="radio" name="sugar" value="少糖"> 少
+        <input type="radio" name="sugar" value="全糖" checked> 全
+      </form>
+
+      <form name="iceList" id="iceList">
+        <label>冰塊</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" name="ice" value="去冰"> 無
+        <input type="radio" name="ice" value="微冰"> 微
+        <input type="radio" name="ice" value="半冰"> 半
+        <input type="radio" name="ice" value="少冰"> 少
+        <input type="radio" name="ice" value="正常" checked> 全 <br/><br/>
+      </form>
+
+      <form name="sizeList" id="sizeList">
+        <label>大小</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" name="size" value="小杯"> 小
+        <input type="radio" name="size" value="中杯" checked> 中
+        <input type="radio" name="size" value="大杯"> 大
+      </form>
+      <br>
+      <label style="font-weight: bold;">添加配料</label><br/><br/>
+      <label>珍珠 5元</label>&nbsp;
+      <input type="checkbox" id="bubble" value="bubble">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <label>鮮奶 5元</label>&nbsp;
+      <input type="checkbox" id="milk" value="milk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <label>布丁 10元</label>&nbsp;
+      <input type="checkbox" id="pudding" value="pudding"><br/><br/><br/>
+
+      <label>購買數量</label>&nbsp;&nbsp;&nbsp;
+      <input type="text" id="number"><br/><br/>
+
+      <br>
+      <label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+      <button onclick="add();">儲存</button>  
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+      <button onclick="reset();">清空</button>
+    </div>
+  </div>
+
+  <div id="popCheckout" style="overflow-y:scroll;width=auto;">
+    <div id = "checkMessage" style = "padding:15;">
+      <p>即將結帳</p>
+      <p>請確認商品項目及數量是否正確，確認後將<font color="#FF0000">無法</font>進行更改。</p>
+    </div>
+
+    <div id="shoplistWindow">
+      <p >===========購買清單===========</p>
+      <table id="shoplist"> 
+      </table>
+      <br>
+      <label>
+        <br/>&ensp;&thinsp;------------------------------------------------------- <br/><br/>
+        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+      </label>
+      <label id="totalMoney" left=400>
+        小計 0 元
+      </label>
+      <p >===========以下空白===========</p>
+    </div>
+    <div id = "responseBotton" style="padding:10">
+      <br/>
+      <label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;</label>
+      <button onclick="checkout();closeCheckout();popSuccess()">確定</button>  
+      &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+      <button onclick="closeCheckout();">取消</button>
+    </div>
+  </div>
+
+  <div id="popSuccessCheckout">
+    <div style="padding:10">
+      <p>是否繼續購買？</p>
+      <br/>
+      <label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&thinsp;</label>
+      <button onclick="closeSuccess();">繼續</button>
+      <label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+      <button onclick="window.close();">結束</button>
+    </div>
+  </div>
+
+  <p id="msg">Message:<br></p>
+</body>
+</html>

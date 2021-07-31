@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Objects Test -- Car</h2>
+<p>Creating an car object:</p>
+<p><a href="javascript:window.location.reload()">重新整理</a></p>
+
+<br>
+
+<p>
+  Create your car.
+</p>
+
+<table id="inputTable" border="0">
+  <tr height="30">
+    <td align="right">
+      Brand: 
+    </td>
+    <td>
+      <input id="brandInput" autofocus required></input>
+    </td>
+  </tr>
+  <tr height="30">
+    <td align="right">
+      Year: 
+    </td>
+    <td>
+      <input id="yearInput" required></input>
+    </td>
+  </tr>
+</table>
+
+<!-- 控制器 --> 
+<table id="controller" border="1" cellpadding="3" cellspacing="1" style="border: 3px solid #990088; 
+border-collapse: collapse; width:300px;display:none">
+  <tr height="30">
+　  <td colspan="3" align = "center">Controller of Car</td>
+　</tr>
+  <tr height="30">
+　  <td colspan="2" align = "center" width="200">Moving</td>
+    <td align = "center" width="100">Charging</td>
+　</tr>
+  <tr height="40">
+    <td align = "center">Forward</td>
+    <td align = "center">Backward</td>
+    <td>
+      <center>
+        <button id = "c1" onclick = "charge1();showCar()"> 1 unit</button>
+      </center>
+    </td>
+  </tr>
+　<tr height="40">
+　  <td>
+      <center>
+        <button id = "f1" onclick = "forward1m();showCar()"> 1 meter </button>
+      </center>
+    </td>
+　  <td>
+      <center>
+        <button id = "b1" onclick = "backward1m();showCar()"> 1 meter </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "c10" onclick = "charge10();showCar()"> 10 units</button>
+      </center>
+    </td>
+　</tr>
+　<tr height="40">
+    <td>
+      <center>
+        <button id = "f50" onclick = "forward10m();showCar()"> 10 meters </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "b50" onclick = "backward10m();showCar()"> 10 meters </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "bf" onclick = "charge50();showCar()"> 50 units </button>
+      </center>
+    </td>
+　</tr>
+  <tr height="40">
+    <td>
+      <center>
+        <button id = "f10" onclick = "forward50m();showCar()"> 50 meters </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "b10" onclick = "backward50m();showCar()"> 50 meters </button>
+      </center>
+    </td>
+    <td>
+      <center>
+        <button id = "bf" onclick = "fullCharge();showCar()"> Full </button>
+      </center>
+    </td>
+　</tr>
+</table>
+
+<!-- 建立物件 --> 
+<br>
+<button onclick = "this.style = 'display:none'; 
+document.getElementById('controller').style.display = 'block';
+document.getElementById('inputTable').style.display = 'none';
+let inBrand = document.getElementById('brandInput').value;
+let inYear = document.getElementById('yearInput').value;
+myCar = new Car(inBrand,parseInt(inYear));
+showCar();"> Create</button>
+
+<p id="carMessage"></p>
+<p id="actionMessage"></p>
+
+
+
+<script>
+
+let costList = {"BMW":0.077, "Toyota":0.067, "Ford":0.057, "Benz":0.068, "Nissan":0.091};
+let energyList = {"BMW":160, "Toyota":100, "Ford":110, "Benz":150, "Nissan":130};
+
+<!-- Car 類別 -->
+
+class Car{
+
+  <!-- 建構子 -->
+  constructor(brand, year){
+
+    this.brand = brand;
+    this.year = year;
+    this.position = 0;
+    this.costPerMeter = costList[brand];
+    this.energy = energyList[brand];
+
+    if(this.costPerMeter==undefined){
+      this.costPerMeter = 0.1;
+    }
+
+    if(this.energy==undefined){
+      this.energy = 100;
+    }
+
+  }
+
+  <!-- 移動方法 -->
+  move(dist){
+
+    let moveEnergy = Math.abs(this.costPerMeter * dist);
+
+    if(moveEnergy <= this.energy){
+
+      this.energy -= moveEnergy;
+      this.position += dist;
+
+      return 1;
+
+    } else {
+
+      alert('The car does not have enough energy, since the movement need ' + 
+	moveEnergy + ' unit of energy while the car only has ' + this.energy.toFixed(2) + 'unit of energy.');
+
+      return 0;
+
+    }
+  }
+}
+
+<!-- 轉字串 -->
+Car.prototype.toString = function (){
+  return "The " + this.year + " " + this.brand + " car is at position " + this.position + 
+         ", and with residual energy " + this.energy.toFixed(2);
+}
+
+<!-- 顯示方法 -->
+function showCar(){
+  document.getElementById('carMessage').innerHTML = myCar;
+}
+
+<!-- 向前 -->
+function forward1m(){
+  if(myCar.move(1)){
+    document.getElementById('actionMessage').innerHTML = 'Move 1 meter forward.';
+  } else {
+    document.getElementById('actionMessage').innerHTML = '';
+  }
+}
+
+function forward10m(){
+  if(myCar.move(10)){
+    document.getElementById('actionMessage').innerHTML = 'Move 10 meters forward.';
+  } else {
+    document.getElementById('actionMessage').innerHTML = '';
+  }
+}
+
+function forward50m(){
+  if(myCar.move(50)){
+    document.getElementById('actionMessage').innerHTML = 'Move 50 meters forward.';
+  } else {
+    document.getElementById('actionMessage').innerHTML = '';
+  }
+}
+
+<!-- 向後 -->
+function backward1m(){
+  if(myCar.move(-1)){
+    document.getElementById('actionMessage').innerHTML = 'Move 1 meter backward.';
+  } else {
+    document.getElementById('actionMessage').innerHTML = '';
+  }
+}
+
+function backward10m(){
+  if(myCar.move(-10)){
+    document.getElementById('actionMessage').innerHTML = 'Move 10 meters backward.';
+  } else {
+    document.getElementById('actionMessage').innerHTML = '';
+  }
+}
+
+function backward50m(){
+  if(myCar.move(-50)){
+    document.getElementById('actionMessage').innerHTML = 'Move 50 meters backward.';
+  } else {
+    document.getElementById('actionMessage').innerHTML = '';
+  }
+}
+
+<!-- 補充能量 -->
+function charge1(){
+
+  if(energyList[myCar.brand]==undefined){
+
+    if(100 - myCar.energy <= 1){
+      myCar.energy = 100;
+    } else {
+      myCar.energy += 1;
+    }
+
+  } else if(energyList[myCar.brand] - myCar.energy <= 1) {
+    myCar.energy = energyList[myCar.brand];
+  } else {
+    myCar.energy += 1;
+  }
+
+  document.getElementById('actionMessage').innerHTML = 'Charge 1 unit energy.';
+}
+
+function charge10(){
+
+  if(energyList[myCar.brand]==undefined){
+
+    if(100 - myCar.energy <= 10){
+      myCar.energy = 100;
+    } else {
+      myCar.energy += 10;
+    }
+
+  } else if(energyList[myCar.brand] - myCar.energy <= 10) {
+    myCar.energy = energyList[myCar.brand];
+  } else {
+    myCar.energy += 10;
+  }
+
+  document.getElementById('actionMessage').innerHTML = 'Charge 10 units energy.';
+}
+
+function charge50(){
+
+  if(energyList[myCar.brand]==undefined){
+
+    if(100 - myCar.energy <= 50){
+      myCar.energy = 100;
+    } else {
+      myCar.energy += 50;
+    }
+
+  } else if(energyList[myCar.brand] - myCar.energy <= 50) {
+    myCar.energy = energyList[myCar.brand];
+  } else {
+    myCar.energy += 50;
+  }
+
+  document.getElementById('actionMessage').innerHTML = 'Charge 50 units energy.';
+}
+
+function fullCharge(){
+
+  myCar.energy = energyList[myCar.brand];
+
+  if(myCar.energy==undefined){
+    myCar.energy = 100;
+  }
+
+  document.getElementById('actionMessage').innerHTML = 'Full charge energy.';
+}
+
+let myCar
+</script>
+
+</body>
+</html>
