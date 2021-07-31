@@ -1,7 +1,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<title>Menu for drinks</title>
+  
 <style>
   table{
     border: 1px;
@@ -342,8 +343,6 @@
   }
 
   function checkout(){
-    document.getElementById("msg").innerHTML += "checkout\n";
-    
     while(document.getElementById('work_table').rows[1]!=undefined){
       document.getElementById('work_table').deleteRow(1);
     }
@@ -493,6 +492,5 @@
     </div>
   </div>
 
-  <p id="msg">Message:<br></p>
 </body>
 </html>
